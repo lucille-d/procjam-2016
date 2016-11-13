@@ -18,17 +18,19 @@
     }
 
     function generateStars(ctx, stars) {
-        const radius = random(1, 4);
-        const goingLeft = random(0, 1) > 0.5;
-        const goingUp = random(0, 1) > 0.5;
+        if (random(0, 1) > (accelerating ? 0.01 : 4) / 10) {
+            const radius = random(1, 4);
+            const goingLeft = random(0, 1) > 0.5;
+            const goingUp = random(0, 1) > 0.5;
 
-        stars.push({
-            x: ctx.canvas.width / 2,
-            y: ctx.canvas.height / 2,
-            radius: radius,
-            xVelocity: (goingLeft ? -1 : 1) * radius * random(1, radius + 20) / 10,
-            yVelocity: (goingUp ? -1 : 1) * radius * random(1, radius + 20) / 10
-        })
+            stars.push({
+                x: ctx.canvas.width / 2,
+                y: ctx.canvas.height / 2,
+                radius: radius,
+                xVelocity: (goingLeft ? -1 : 1) * radius * random(1, radius + 20) / 10,
+                yVelocity: (goingUp ? -1 : 1) * radius * random(1, radius + 20) / 10
+            });
+        }
     }
 
     function moveStars(ctx, stars) {
@@ -46,6 +48,7 @@
     }
 
     function renderStars(ctx, stars) {
+        console.log(stars.length)
         clearCanvas(ctx);
         stars.forEach((star) => {
             drawStar(ctx, star.x, star.y, star.radius);
