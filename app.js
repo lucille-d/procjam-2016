@@ -4,6 +4,7 @@
     const ctx = initCanvas();
 
     let stars = [];
+    let accelerating = false;
 
     generateStars(ctx, stars);
 
@@ -21,7 +22,7 @@
         stars.push({
             x: ctx.canvas.width / 2,
             y: ctx.canvas.height / 2,
-            radius: randomInt(1, 6),
+            radius: randomInt(1, 4),
             xVelocity: randomInt(-3, 3),
             yVelocity: randomInt(-3, 3)
         })
@@ -30,8 +31,8 @@
     function moveStars(ctx, stars) {
         const stillVisibleStars = [];
         stars.forEach((star) => {
-            star.x += star.xVelocity;
-            star.y += star.yVelocity;
+            star.x += star.xVelocity * (accelerating ? 5 : 1);
+            star.y += star.yVelocity * (accelerating ? 5 : 1);
 
             if (star.x > 0 && star.x < ctx.canvas.width &&
                 star.y > 0 && star.y < ctx.canvas.height) {
@@ -54,9 +55,20 @@
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = 'white';
 
-
         window.addEventListener('resize', () => {
             setCanvasToWindowSize();
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.keyCode === 32) { //spacebar
+                accelerating = true;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.keyCode === 32) {
+                accelerating = false;
+            }
         });
 
         function setCanvasToWindowSize() {
