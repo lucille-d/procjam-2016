@@ -6,6 +6,24 @@
     let stars = [];
     let accelerating = false;
 
+    window.addEventListener('resize', () => {
+        setCanvasToWindowSize();
+        const ctx = initCanvas();
+        update(ctx, stars);
+    });
+
+    window.addEventListener('keydown', (e) => {
+        if (e.keyCode === 32) { //spacebar
+            accelerating = true;
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        if (e.keyCode === 32) {
+            accelerating = false;
+        }
+    });
+
     generateStars(ctx, stars);
 
     update(ctx, stars);
@@ -59,28 +77,6 @@
         setCanvasToWindowSize();
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = 'white';
-
-        window.addEventListener('resize', () => {
-            setCanvasToWindowSize();
-        });
-
-        window.addEventListener('keydown', (e) => {
-            if (e.keyCode === 32) { //spacebar
-                accelerating = true;
-            }
-        });
-
-        window.addEventListener('keyup', (e) => {
-            if (e.keyCode === 32) {
-                accelerating = false;
-            }
-        });
-
-        function setCanvasToWindowSize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
         return ctx;
     }
 
@@ -91,6 +87,12 @@
     }
 
     /* Util */
+
+    function setCanvasToWindowSize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
     function clearCanvas(ctx) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     }
