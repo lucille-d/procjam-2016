@@ -8,7 +8,6 @@
 
     generateStars(ctx, stars);
 
-
     update(ctx, stars);
 
     function update(ctx, stars) {
@@ -19,12 +18,16 @@
     }
 
     function generateStars(ctx, stars) {
+        const radius = random(1, 4);
+        const goingLeft = random(0, 1) > 0.5;
+        const goingUp = random(0, 1) > 0.5;
+
         stars.push({
             x: ctx.canvas.width / 2,
             y: ctx.canvas.height / 2,
-            radius: randomInt(1, 4),
-            xVelocity: randomInt(-3, 3),
-            yVelocity: randomInt(-3, 3)
+            radius: radius,
+            xVelocity: (goingLeft ? -1 : 1) * radius * random(1, radius + 20) / 10,
+            yVelocity: (goingUp ? -1 : 1) * radius * random(1, radius + 20) / 10
         })
     }
 
@@ -90,7 +93,7 @@
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     }
 
-    function randomInt(min, max) {
+    function random(min, max) {
         return Math.random() * (max - min) + min;
     }
 
