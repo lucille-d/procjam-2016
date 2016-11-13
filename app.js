@@ -48,7 +48,6 @@
     }
 
     function renderStars(ctx, stars) {
-        console.log(stars.length)
         clearCanvas(ctx);
         stars.forEach((star) => {
             drawStar(ctx, star.x, star.y, star.radius);
@@ -99,5 +98,4 @@
     function random(min, max) {
         return Math.random() * (max - min) + min;
     }
-
 })();
